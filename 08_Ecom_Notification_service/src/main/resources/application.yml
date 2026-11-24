@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: ECOM-NOTIFICATION-SERVICE
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST:notification-db}:3306/ecomnotificationdb
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:kafka:9092}
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: 8088
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://ecom-eureka-server:8761/eureka/}
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+jwt:
+  secret: ${JWT_SECRET}

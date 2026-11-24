@@ -1,0 +1,24 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Maven build files
+**/target/
+
+# IDE files
+**/.project
+**/.classpath
+**/.factorypath
+**/.settings/
+**/.idea/
+**/*.iml
+
+# Logs and crash dumps
+**/logs/
+**/*.log
+**/hs_err_pid*.log
+
+# OS files
+.DS_Store
+Thumbs.db

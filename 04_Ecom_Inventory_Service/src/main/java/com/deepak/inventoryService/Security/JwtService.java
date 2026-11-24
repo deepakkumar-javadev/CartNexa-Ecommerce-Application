@@ -1,0 +1,51 @@
+package com.deepak.inventoryService.Security;
+
+import org.springframework.beans.factory.annotation.Value;
+
+import javax.crypto.SecretKey;
+
+import org.springframework.stereotype.Service;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+
+@Service
+public class JwtService {
+
+    @Value("${jwt.secret}")
+    private String SECRET_KEY;
+
+    // Extract email from JWT
+    public String extractEmail(String token) {
+        return extractAllClaims(token).getSubject();
+    }
+
+    // Extract userId from JWT
+    public Long extractUserId(String token) {
+        return extractAllClaims(token).get("userId", Long.class);
+    }
+
+    // Extract role from JWT
+    public String extractRole(String token) {
+        return extractAllClaims(token).get("role", String.class);
+    }
+
+    // Validate and extract all claims
+    private Claims extractAllClaims(String token) {
+
+        return Jwts.parser()
+                .verifyWith(getSignKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
+    // Create signing key
+    private SecretKey getSignKey() {
+
+        return Keys.hmacShaKeyFor(
+                SECRET_KEY.getBytes()
+        );
+    }
+}
